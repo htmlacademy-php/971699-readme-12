@@ -201,59 +201,64 @@ $user_name = 'Сергей'; // укажите здесь ваше имя
                 </ul>
             </div>
         </div>
-        <<?php $array = [
-            ['title'   => 'Цитата',
+        <<?php $posts = [
+            [
+             'title'   => 'Цитата',
              'type'    => 'post-quote',
              'content' => 'Мы в жизни любим только раз, а после ищем лишь похожих',
              'name'    => 'Лариса',
-             'ava'     => 'userpic-larisa-small.jpg'],
-
-             ['title'  => 'Игра престолов',
+             'ava'     => 'userpic-larisa-small.jpg'
+            ],
+             [
+             'title'  => 'Игра престолов',
              'type'    => 'post-text',
              'content' => 'Не могу дождаться начала финального сезона своего любимого сериала!',
              'name'    => 'Владик',
-             'ava'     => 'userpic.jpg'],
-
-             ['title'  => 'Наконец, обработал фотки!',
+             'ava'     => 'userpic.jpg'
+            ],
+             [
+             'title'  => 'Наконец, обработал фотки!',
              'type'    => 'post-photo',
              'content' => 'rock-medium.jpg',
              'name'    => 'Виктор',
-             'ava'     => 'userpic-mark.jpg'],
-
-             ['title'  => 'Моя мечта',
+             'ava'     => 'userpic-mark.jpg'
+            ],
+             [
+             'title'  => 'Моя мечта',
              'type'    => 'post-photo',
              'content' => 'coast-medium.jpg',
              'name'    => 'Лариса',
-             'ava'     => 'userpic-larisa-small.jpg'],
-
+             'ava'     => 'userpic-larisa-small.jpg'
+            ],
              ['title'  => 'Лучшие курсы',
              'type'    => 'post-link',
              'content' => 'www.htmlacademy.ru',
              'name'    => 'Владик',
-             'ava'     => 'userpic.jpg']
+             'ava'     => 'userpic.jpg'
+            ]
             ];?>
         <div class="popular__posts">
-            <?php foreach ($array as $value): ?>
-            <article class="popular__post post <?=$value['type'];?>">
+            <?php foreach ($posts as $post): ?>
+            <article class="popular__post post <?=$post['type'];?>">
                 <header class="post__header">
-                    <h2><?=$value['title'];?></h2>
+                    <h2><?=$post['title'];?></h2>
                 </header>
                 <div class="post__main">
-                    <?php if ($value['type'] == 'post-quote'): ?>
+                    <?php if ($post['type'] == 'post-quote'): ?>
                         <blockquote>
-                            <p><?=$value['content'];?></p>
+                            <p><?=$post['content'];?></p>
                             <cite>Неизвестный Автор</cite>
                         </blockquote>
-                    <?php elseif ($value['type'] == 'post-text'): ?>
-                        <p><?=$value['content'];?></p>
-                    <?php elseif ($value['type'] == 'post-photo'): ?>
+                    <?php elseif ($post['type'] == 'post-text'): ?>
+                        <p><?=$post['content'];?></p>
+                    <?php elseif ($post['type'] == 'post-photo'): ?>
                         <div class="post-photo__image-wrapper">
-                           <img src="img/<?=$value['content'];?>" alt="Фото от пользователя" width="360" height="240">
+                           <img src="img/<?=$post['content'];?>" alt="Фото от пользователя" width="360" height="240">
                         </div>
-                    <?php elseif ($value['type'] == 'post-video'): ?>
+                    <?php elseif ($post['type'] == 'post-video'): ?>
                         <div class="post-video__block">
                             <div class="post-video__preview">
-                                <?=embed_youtube_cover($value['content']); ?>
+                                <?=embed_youtube_cover($post['content']); ?>
                                 <img src="img/coast-medium.jpg" alt="Превью к видео" width="360" height="188">
                             </div>
                             <a href="post-details.html" class="post-video__play-big button">
@@ -263,18 +268,18 @@ $user_name = 'Сергей'; // укажите здесь ваше имя
                                 <span class="visually-hidden">Запустить проигрыватель</span>
                              </a>
                         </div>
-                    <?php elseif ($value['type'] == 'post-link'): ?>
+                    <?php elseif ($post['type'] == 'post-link'): ?>
                         <div class="post-link__wrapper">
-                            <a class="post-link__external" href="http://" title="Перейти по ссылке">
+                            <a class="post-link__external" href="http://<?=$post['content']?>" title="Перейти по ссылке">
                             <div class="post-link__info-wrapper">
                                 <div class="post-link__icon-wrapper">
                                     <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                 </div>
                                 <div class="post-link__info">
-                                    <h3><?=$value['title'];?></h3>
+                                    <h3><?=$post['title'];?></h3>
                                 </div>
                             </div>
-                        <span><?=$value['content'];?></span>
+                        <span><?=$post['content'];?></span>
                     </a>
                 </div>
                     <?php endif; ?>
@@ -283,10 +288,10 @@ $user_name = 'Сергей'; // укажите здесь ваше имя
                     <div class="post__author">
                         <a class="post__author-link" href="#" title="Автор">
                             <div class="post__avatar-wrapper">
-                                <img class="post__author-avatar" src="img/<?=$value['ava'];?>" alt="Аватар пользователя">
+                                <img class="post__author-avatar" src="img/<?=$post['ava'];?>" alt="Аватар пользователя">
                             </div>
                             <div class="post__info">
-                                <b class="post__author-name"><?=$value['name'];?></b>
+                                <b class="post__author-name"><?=$post['name'];?></b>
                                 <time class="post__time" datetime="">дата</time>
                             </div>
                         </a>
