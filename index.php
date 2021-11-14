@@ -201,7 +201,7 @@ $user_name = 'Сергей'; // укажите здесь ваше имя
                 </ul>
             </div>
         </div>
-        <<?php $posts = [
+        <?php $posts = [
             [
              'title'   => 'Цитата',
              'type'    => 'post-quote',
@@ -236,8 +236,34 @@ $user_name = 'Сергей'; // укажите здесь ваше имя
              'name'    => 'Владик',
              'ava'     => 'userpic.jpg'
             ]
-            ];?>
-        <div class="popular__posts">
+            ];
+
+            function long_text ($text, $max_simbol) 
+            {
+            $text_array = explode(" ", $text);
+            $symbol = mb_strlen($text);
+                if ($symbol > $max_simbol) 
+                {
+                    foreach ($text_array as $key => $d)
+                    {
+                    $a = mb_strlen($d);
+                    $b = $b+$a+1;
+                        if ($b >= $max_simbol) 
+                        {
+                        break;
+                        }
+                    }
+                $new_text = array_slice($text_array, 0, $key);
+                $new_text = implode(" ", $new_text);
+                echo $new_text . "..." . "<br>" . "<br>";
+                echo '<a class="post-text__more-link" href="#">Читать далее</a>';
+                } else 
+                {
+                echo $text . "<br>";
+                };
+            };
+        ?>
+            <div class="popular__posts">
             <?php foreach ($posts as $post): ?>
             <article class="popular__post post <?=$post['type'];?>">
                 <header class="post__header">
@@ -250,7 +276,12 @@ $user_name = 'Сергей'; // укажите здесь ваше имя
                             <cite>Неизвестный Автор</cite>
                         </blockquote>
                     <?php elseif ($post['type'] == 'post-text'): ?>
-                        <p><?=$post['content'];?></p>
+                        <p>
+                            <?php 
+                                $text = $post['content'];
+                                long_text($text, $max_simbol=300)
+                            ?>
+                        </p>
                     <?php elseif ($post['type'] == 'post-photo'): ?>
                         <div class="post-photo__image-wrapper">
                            <img src="img/<?=$post['content'];?>" alt="Фото от пользователя" width="360" height="240">
