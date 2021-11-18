@@ -85,7 +85,7 @@
         </div>
         <div class="popular__posts">
             <?php foreach ($posts as $post): ?>
-            <article class="popular__post post <?=$post['type'];?>">
+            <article class="popular__post post <?=htmlspecialchars($post['type']);?>">
                 <header class="post__header">
                     <h2><?=htmlspecialchars($post['title']);?></h2>
                 </header>
@@ -136,7 +136,7 @@
                     <div class="post__author">
                         <a class="post__author-link" href="#" title="Автор">
                             <div class="post__avatar-wrapper">
-                                <img class="post__author-avatar" src="img/<?=($post['ava']);?>" alt="Аватар пользователя">
+                                <img class="post__author-avatar" src="img/<?=htmlspecialchars($post['ava']);?>" alt="Аватар пользователя">
                             </div>
                             <div class="post__info">
                                 <b class="post__author-name"><?=htmlspecialchars($post['name']);?></b>
