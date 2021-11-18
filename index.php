@@ -65,11 +65,9 @@ $posts = [
                 }
             };
 
-$main = include_template('main.php', $posts);
+$main = include_template('main.php', ['posts' => $posts]);
 
-$main_content = [$title, $main];
-
-$layout = include_template('layout.php', $main_content);
+$layout = include_template('layout.php', ['title' => $title, 'main' => $main]);
 
 print $layout;
 

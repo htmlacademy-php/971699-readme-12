@@ -87,26 +87,26 @@
             <?php foreach ($posts as $post): ?>
             <article class="popular__post post <?=$post['type'];?>">
                 <header class="post__header">
-                    <h2><?=$post['title'];?></h2>
+                    <h2><?=htmlspecialchars($post['title']);?></h2>
                 </header>
                 <div class="post__main">
                     <?php if ($post['type'] == 'post-quote'): ?>
                         <blockquote>
-                            <p><?=$post['content'];?></p>
+                            <p><?=htmlspecialchars($post['content']);?></p>
                             <cite>Неизвестный Автор</cite>
                         </blockquote>
                     <?php elseif ($post['type'] == 'post-text'): ?>
                             <?php
-                                long_text($post['content'], 300);
+                                long_text(htmlspecialchars($post['content']), 300);
                             ?>
                     <?php elseif ($post['type'] == 'post-photo'): ?>
                         <div class="post-photo__image-wrapper">
-                           <img src="img/<?=$post['content'];?>" alt="Фото от пользователя" width="360" height="240">
+                           <img src="img/<?=htmlspecialchars($post['content']);?>" alt="Фото от пользователя" width="360" height="240">
                         </div>
                     <?php elseif ($post['type'] == 'post-video'): ?>
                         <div class="post-video__block">
                             <div class="post-video__preview">
-                                <?=embed_youtube_cover($post['content']); ?>
+                                <?=embed_youtube_cover(htmlspecialchars($post['content'])); ?>
                                 <img src="img/coast-medium.jpg" alt="Превью к видео" width="360" height="188">
                             </div>
                             <a href="post-details.html" class="post-video__play-big button">
@@ -118,16 +118,16 @@
                         </div>
                     <?php elseif ($post['type'] == 'post-link'): ?>
                         <div class="post-link__wrapper">
-                            <a class="post-link__external" href="http://<?=$post['content']?>" title="Перейти по ссылке">
+                            <a class="post-link__external" href="http://<?=htmlspecialchars($post['content'])?>" title="Перейти по ссылке">
                             <div class="post-link__info-wrapper">
                                 <div class="post-link__icon-wrapper">
                                     <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                 </div>
                                 <div class="post-link__info">
-                                    <h3><?=$post['title'];?></h3>
+                                    <h3><?=htmlspecialchars($post['title']);?></h3>
                                 </div>
                             </div>
-                        <span><?=$post['content'];?></span>
+                        <span><?=htmlspecialchars($post['content']);?></span>
                     </a>
                 </div>
                     <?php endif; ?>
@@ -136,10 +136,10 @@
                     <div class="post__author">
                         <a class="post__author-link" href="#" title="Автор">
                             <div class="post__avatar-wrapper">
-                                <img class="post__author-avatar" src="img/<?=$post['ava'];?>" alt="Аватар пользователя">
+                                <img class="post__author-avatar" src="img/<?=($post['ava']);?>" alt="Аватар пользователя">
                             </div>
                             <div class="post__info">
-                                <b class="post__author-name"><?=$post['name'];?></b>
+                                <b class="post__author-name"><?=htmlspecialchars($post['name']);?></b>
                                 <time class="post__time" datetime="">дата</time>
                             </div>
                         </a>
