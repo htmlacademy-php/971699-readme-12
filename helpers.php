@@ -288,45 +288,7 @@ $symbol = mb_strlen($text);
     }
 }
 
-
-$posts = [
-            [
-             'title'   => 'Цитата',
-             'type'    => 'post-quote',
-             'content' => 'Мы в жизни любим только раз, а после ищем лишь похожих',
-             'name'    => 'Лариса',
-             'ava'     => 'userpic-larisa-small.jpg'
-            ],
-             [
-             'title'  => 'Игра престолов',
-             'type'    => 'post-text',
-             'content' => 'Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!',
-             'name'    => 'Владик',
-             'ava'     => 'userpic.jpg'
-            ],
-             [
-             'title'  => 'Наконец, обработал фотки!',
-             'type'    => 'post-photo',
-             'content' => 'rock-medium.jpg',
-             'name'    => 'Виктор',
-             'ava'     => 'userpic-mark.jpg'
-            ],
-             [
-             'title'  => 'Моя мечта',
-             'type'    => 'post-photo',
-             'content' => 'coast-medium.jpg',
-             'name'    => 'Лариса',
-             'ava'     => 'userpic-larisa-small.jpg'
-            ],
-             ['title'  => 'Лучшие курсы',
-             'type'    => 'post-link',
-             'content' => 'www.htmlacademy.ru',
-             'name'    => 'Владик',
-             'ava'     => 'userpic.jpg'
-            ],
-            ];
-
-function time_function($datetime) { 
+function format_datetime($datetime) { 
 
     $date_now = date('Y-m-d H:i:s');
     $diff = date_diff(date_create($datetime), date_create($date_now));
@@ -341,8 +303,6 @@ if ($difference < 3600)
     $two = "минуты";
     $many = "минут";
     $days_count = date_interval_format($diff, "%i");
-    $plural_form = get_noun_plural_form($days_count, $one, $two, $many);
-    $time = $days_count ." ". $plural_form ." ". "назад";
     }
 elseif($difference >= 3600 and $difference < 86400) 
     {
@@ -350,8 +310,6 @@ elseif($difference >= 3600 and $difference < 86400)
     $two = "часа";
     $many = "часов";
     $days_count = date_interval_format($diff, "%h");
-    $plural_form = get_noun_plural_form($days_count, $one, $two, $many);
-    $time = $days_count ." ". $plural_form ." ". "назад";
     }
 elseif($difference >= 86400 and $difference < 604800) 
     {
@@ -359,8 +317,6 @@ elseif($difference >= 86400 and $difference < 604800)
     $two = "дня";
     $many = "дней";
     $days_count = date_interval_format($diff, "%d");
-    $plural_form = get_noun_plural_form($days_count, $one, $two, $many);
-    $time = $days_count ." ". $plural_form ." ". "назад";
     }
 elseif($difference >= 604800 and $difference < 3024000) 
     {
@@ -368,8 +324,6 @@ elseif($difference >= 604800 and $difference < 3024000)
     $two = "недели";
     $many = "недель";
     $days_count = (date_interval_format($diff, '%d'))/7;
-    $plural_form = get_noun_plural_form($days_count, $one, $two, $many);
-    $time = $days_count ." ". $plural_form ." ". "назад";
     }
 elseif($difference >= 3024000)
     {
@@ -377,8 +331,8 @@ elseif($difference >= 3024000)
     $two = "месяца";
     $many = "месяцев";
     $days_count = date_interval_format($diff, "%m");
+    }
     $plural_form = get_noun_plural_form($days_count, $one, $two, $many);
     $time = $days_count ." ". $plural_form ." ". "назад";
-    }
     return $time;
 }
