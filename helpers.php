@@ -262,3 +262,77 @@ function generate_random_date($index)
 
     return $dt;
 }
+
+function long_text ($text, $max_simbol=300)
+{
+$text_array = explode(" ", $text);
+$symbol = mb_strlen($text);
+    if ($symbol > $max_simbol) 
+    {
+        foreach ($text_array as $key => $word)
+        {
+        $sum_sim = mb_strlen($word);
+        $total_sim = $total_sim+$sum_sim+1;
+            if ($total_sim >= $max_simbol) 
+            {
+            break;
+            }
+        }
+    $new_text = array_slice($text_array, 0, $key);
+    $new_text = implode(" ", $new_text);
+    echo "<p>" . $new_text . "...</p>";
+    echo '<a class="post-text__more-link" href="#">Читать далее</a>';
+    } else 
+    {
+    echo "<p>" . $text . "</p>";
+    }
+}
+
+function format_datetime($datetime) { 
+
+    $date_now = date('Y-m-d H:i:s');
+    $diff = date_diff(date_create($datetime), date_create($date_now));
+
+    $timestamp_random = strtotime($datetime);
+    $timestamp_now = strtotime($date_now);
+    $difference = $timestamp_now - $timestamp_random;
+
+if ($difference < 3600)
+    {
+    $one = "минута";
+    $two = "минуты";
+    $many = "минут";
+    $days_count = date_interval_format($diff, "%i");
+    }
+elseif($difference >= 3600 and $difference < 86400) 
+    {
+    $one = "час";
+    $two = "часа";
+    $many = "часов";
+    $days_count = date_interval_format($diff, "%h");
+    }
+elseif($difference >= 86400 and $difference < 604800) 
+    {
+    $one = "день";
+    $two = "дня";
+    $many = "дней";
+    $days_count = date_interval_format($diff, "%d");
+    }
+elseif($difference >= 604800 and $difference < 3024000) 
+    {
+    $one = "неделя";
+    $two = "недели";
+    $many = "недель";
+    $days_count = (date_interval_format($diff, '%d'))/7;
+    }
+elseif($difference >= 3024000)
+    {
+    $one = "месяц";
+    $two = "месяца";
+    $many = "месяцев";
+    $days_count = date_interval_format($diff, "%m");
+    }
+    $plural_form = get_noun_plural_form($days_count, $one, $two, $many);
+    $time = $days_count ." ". $plural_form ." ". "назад";
+    return $time;
+}

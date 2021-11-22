@@ -84,7 +84,7 @@
             </div>
         </div>
         <div class="popular__posts">
-            <?php foreach ($posts as $post): ?>
+            <?php foreach ($posts as $key => $post): ?>
             <article class="popular__post post <?=htmlspecialchars($post['type']);?>">
                 <header class="post__header">
                     <h2><?=htmlspecialchars($post['title']);?></h2>
@@ -132,6 +132,12 @@
                 </div>
                     <?php endif; ?>
                 </div>
+
+                <?php
+                 $datetime = generate_random_date($key);
+                 $date_title = date('d.m.Y H:i' ,strtotime($datetime));
+                 ?>
+
                 <footer class="post__footer">
                     <div class="post__author">
                         <a class="post__author-link" href="#" title="Автор">
@@ -140,7 +146,8 @@
                             </div>
                             <div class="post__info">
                                 <b class="post__author-name"><?=htmlspecialchars($post['name']);?></b>
-                                <time class="post__time" datetime="">дата</time>
+                                <time class="post__time" datetime="<?=$datetime;?>" title="<?=$date_title;?>"><?=format_datetime($datetime);?>
+                                    </time>
                             </div>
                         </a>
                     </div>
