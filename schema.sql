@@ -1,0 +1,97 @@
+CREATE DATABASE readme_db DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+
+USE readme_db;
+
+CREATE TABLE users (
+  user_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_data DATETIME DEFAULT CURRENT_TIMESTAMP, 
+  email VARCHAR(128) NOT NULL UNIQUE,
+  login VARCHAR(128) NOT NULL UNIQUE,
+  password CHAR(64) NOT NULL,
+  avatar VARCHAR(128)
+);
+
+CREATE TABLE posts (
+  post_id INT AUTO_INCREMENT PRIMARY KEY,
+  post_data DATETIME DEFAULT CURRENT_TIMESTAMP,
+  avtor VARCHAR(128) NOT NULL,
+  post_type VARCHAR(128) NOT NULL,
+  title VARCHAR(128) NOT NULL,
+  post_text TEXT,
+  post_quote VARCHAR(128),
+  post_photo VARCHAR(128),
+  post_video VARCHAR(128),
+  post_link VARCHAR(128),
+  count_views INT
+);
+
+CREATE TABLE comments (
+  comments_id INT AUTO_INCREMENT PRIMARY KEY,
+  comment_data DATETIME DEFAULT CURRENT_TIMESTAMP, 
+  comment_content TEXT,
+  avtor VARCHAR(128) NOT NULL,
+  post_id INT
+);
+
+ALTER TABLE `comments` ADD FOREIGN KEY (`avtor`) REFERENCES `users`(`login`) 
+ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `comments` ADD FOREIGN KEY (`post_id`) REFERENCES `posts`(`post_id`) 
+ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE TABLE likes (
+  avtor VARCHAR(128) NOT NULL,
+  post_id INT
+);
+
+ALTER TABLE `likes` ADD FOREIGN KEY (`avtor`) REFERENCES `users`(`login`) 
+ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `likes` ADD FOREIGN KEY (`post_id`) REFERENCES `posts`(`post_id`) 
+ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE TABLE subscriptions (
+  subscriber VARCHAR(128) NOT NULL,
+  avtor VARCHAR(128) NOT NULL
+);
+
+ALTER TABLE `subscriptions` ADD FOREIGN KEY (`subscriber`) REFERENCES `users`(`login`) 
+ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `subscriptions` ADD FOREIGN KEY (`avtor`) REFERENCES `users`(`login`) 
+ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE TABLE messages (
+  message_id INT AUTO_INCREMENT PRIMARY KEY,
+  message_data DATETIME DEFAULT CURRENT_TIMESTAMP,
+  message_content TEXT,
+  sender VARCHAR(128) NOT NULL,
+  recipient VARCHAR(128) NOT NULL
+);
+
+ALTER TABLE `messages` ADD FOREIGN KEY (`sender`) REFERENCES `users`(`login`) 
+ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `messages` ADD FOREIGN KEY (`recipient`) REFERENCES `users`(`login`) 
+ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE TABLE hashtags (
+  hashtag_id INT AUTO_INCREMENT PRIMARY KEY,
+  hashtag_name VARCHAR(128)
+);
+
+CREATE TABLE types (
+  types_id INT AUTO_INCREMENT PRIMARY KEY,
+  type_title VARCHAR(128),
+  types_name VARCHAR(128) UNIQUE
+);
+
+ALTER TABLE `posts` ADD FOREIGN KEY (`avtor`) REFERENCES `users`(`login`) 
+ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `posts` ADD FOREIGN KEY (`post_type`) REFERENCES `types`(`types_name`) 
+ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+CREATE INDEX u_email ON users(email);
+CREATE INDEX u_login ON users(login);
+CREATE INDEX p_view ON posts(count_views);
