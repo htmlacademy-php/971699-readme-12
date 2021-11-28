@@ -33,7 +33,7 @@ CREATE TABLE comments (
   post_id INT NOT NULL
 );
 
-ALTER TABLE `comments` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`login`) 
+ALTER TABLE `comments` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`id`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE `comments` ADD FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`) 
@@ -44,7 +44,7 @@ CREATE TABLE likes (
   post_id INT NOT NULL
 );
 
-ALTER TABLE `likes` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`login`) 
+ALTER TABLE `likes` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`id`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE `likes` ADD FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`) 
@@ -55,10 +55,10 @@ CREATE TABLE subscriptions (
   author_id VARCHAR(128) NOT NULL
 );
 
-ALTER TABLE `subscriptions` ADD FOREIGN KEY (`subscriber_id`) REFERENCES `users`(`login`) 
+ALTER TABLE `subscriptions` ADD FOREIGN KEY (`subscriber_id`) REFERENCES `users`(`id`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE `subscriptions` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`login`) 
+ALTER TABLE `subscriptions` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`id`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 CREATE TABLE messages (
@@ -69,10 +69,10 @@ CREATE TABLE messages (
   recipient_id VARCHAR(128) NOT NULL
 );
 
-ALTER TABLE `messages` ADD FOREIGN KEY (`sender_id`) REFERENCES `users`(`login`) 
+ALTER TABLE `messages` ADD FOREIGN KEY (`sender_id`) REFERENCES `users`(`id`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE `messages` ADD FOREIGN KEY (`recipient_id`) REFERENCES `users`(`login`) 
+ALTER TABLE `messages` ADD FOREIGN KEY (`recipient_id`) REFERENCES `users`(`id`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 CREATE TABLE hashtags (
@@ -86,10 +86,10 @@ CREATE TABLE post_types (
   name VARCHAR(128) NOT NULL UNIQUE
 );
 
-ALTER TABLE `posts` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`login`) 
+ALTER TABLE `posts` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`id`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE `posts` ADD FOREIGN KEY (`post_type_id`) REFERENCES `post_types`(`name`) 
+ALTER TABLE `posts` ADD FOREIGN KEY (`post_type_id`) REFERENCES `post_types`(`id`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 CREATE INDEX p_post_type_id ON posts(post_type_id);
