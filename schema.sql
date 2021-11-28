@@ -3,95 +3,94 @@ CREATE DATABASE readme_db DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_genera
 USE readme_db;
 
 CREATE TABLE users (
-  user_id INT AUTO_INCREMENT PRIMARY KEY,
-  user_data DATETIME DEFAULT CURRENT_TIMESTAMP, 
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  creation_date DATETIME DEFAULT CURRENT_TIMESTAMP, 
   email VARCHAR(128) NOT NULL UNIQUE,
   login VARCHAR(128) NOT NULL UNIQUE,
   password CHAR(64) NOT NULL,
-  avatar VARCHAR(128)
+  avatar VARCHAR(128) NULL DEFAULT ''
 );
 
 CREATE TABLE posts (
-  post_id INT AUTO_INCREMENT PRIMARY KEY,
-  post_data DATETIME DEFAULT CURRENT_TIMESTAMP,
-  avtor VARCHAR(128) NOT NULL,
-  post_type VARCHAR(128) NOT NULL,
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  author_id VARCHAR(128) NOT NULL,
+  post_type_id VARCHAR(128) NOT NULL,
   title VARCHAR(128) NOT NULL,
-  post_text TEXT,
-  post_quote VARCHAR(128),
-  post_photo VARCHAR(128),
-  post_video VARCHAR(128),
-  post_link VARCHAR(128),
-  count_views INT
+  text TEXT NULL DEFAULT NULL,
+  quote VARCHAR(128) NULL DEFAULT '',
+  photo VARCHAR(128) NULL DEFAULT '',
+  video VARCHAR(128) NULL DEFAULT '',
+  link VARCHAR(128) NULL DEFAULT '',
+  count_views INT NULL DEFAULT NULL
 );
 
 CREATE TABLE comments (
-  comments_id INT AUTO_INCREMENT PRIMARY KEY,
-  comment_data DATETIME DEFAULT CURRENT_TIMESTAMP, 
-  comment_content TEXT,
-  avtor VARCHAR(128) NOT NULL,
-  post_id INT
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  creation_date DATETIME DEFAULT CURRENT_TIMESTAMP, 
+  content TEXT NOT NULL,
+  author_id VARCHAR(128) NOT NULL,
+  post_id INT NOT NULL
 );
 
-ALTER TABLE `comments` ADD FOREIGN KEY (`avtor`) REFERENCES `users`(`login`) 
+ALTER TABLE `comments` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`login`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE `comments` ADD FOREIGN KEY (`post_id`) REFERENCES `posts`(`post_id`) 
+ALTER TABLE `comments` ADD FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 CREATE TABLE likes (
-  avtor VARCHAR(128) NOT NULL,
-  post_id INT
+  author_id VARCHAR(128) NOT NULL,
+  post_id INT NOT NULL
 );
 
-ALTER TABLE `likes` ADD FOREIGN KEY (`avtor`) REFERENCES `users`(`login`) 
+ALTER TABLE `likes` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`login`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE `likes` ADD FOREIGN KEY (`post_id`) REFERENCES `posts`(`post_id`) 
+ALTER TABLE `likes` ADD FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 CREATE TABLE subscriptions (
-  subscriber VARCHAR(128) NOT NULL,
-  avtor VARCHAR(128) NOT NULL
+  subscriber_id VARCHAR(128) NOT NULL,
+  author_id VARCHAR(128) NOT NULL
 );
 
-ALTER TABLE `subscriptions` ADD FOREIGN KEY (`subscriber`) REFERENCES `users`(`login`) 
+ALTER TABLE `subscriptions` ADD FOREIGN KEY (`subscriber_id`) REFERENCES `users`(`login`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE `subscriptions` ADD FOREIGN KEY (`avtor`) REFERENCES `users`(`login`) 
+ALTER TABLE `subscriptions` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`login`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 CREATE TABLE messages (
-  message_id INT AUTO_INCREMENT PRIMARY KEY,
-  message_data DATETIME DEFAULT CURRENT_TIMESTAMP,
-  message_content TEXT,
-  sender VARCHAR(128) NOT NULL,
-  recipient VARCHAR(128) NOT NULL
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+  content TEXT NOT NULL,
+  sender_id VARCHAR(128) NOT NULL,
+  recipient_id VARCHAR(128) NOT NULL
 );
 
-ALTER TABLE `messages` ADD FOREIGN KEY (`sender`) REFERENCES `users`(`login`) 
+ALTER TABLE `messages` ADD FOREIGN KEY (`sender_id`) REFERENCES `users`(`login`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE `messages` ADD FOREIGN KEY (`recipient`) REFERENCES `users`(`login`) 
+ALTER TABLE `messages` ADD FOREIGN KEY (`recipient_id`) REFERENCES `users`(`login`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 CREATE TABLE hashtags (
-  hashtag_id INT AUTO_INCREMENT PRIMARY KEY,
-  hashtag_name VARCHAR(128)
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(128) NOT NULL
 );
 
-CREATE TABLE types (
-  types_id INT AUTO_INCREMENT PRIMARY KEY,
-  type_title VARCHAR(128),
-  types_name VARCHAR(128) UNIQUE
+CREATE TABLE post_types (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(128) NOT NULL,
+  name VARCHAR(128) NOT NULL UNIQUE
 );
 
-ALTER TABLE `posts` ADD FOREIGN KEY (`avtor`) REFERENCES `users`(`login`) 
+ALTER TABLE `posts` ADD FOREIGN KEY (`author_id`) REFERENCES `users`(`login`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE `posts` ADD FOREIGN KEY (`post_type`) REFERENCES `types`(`types_name`) 
+ALTER TABLE `posts` ADD FOREIGN KEY (`post_type_id`) REFERENCES `post_types`(`name`) 
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-CREATE INDEX u_email ON users(email);
-CREATE INDEX u_login ON users(login);
-CREATE INDEX p_view ON posts(count_views);
+CREATE INDEX p_post_type_id ON posts(post_type_id);
+
