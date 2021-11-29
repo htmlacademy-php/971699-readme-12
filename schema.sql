@@ -14,8 +14,8 @@ CREATE TABLE users (
 CREATE TABLE posts (
   id INT AUTO_INCREMENT PRIMARY KEY,
   creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-  author_id VARCHAR(128) NOT NULL,
-  post_type_id VARCHAR(128) NOT NULL,
+  author_id INT NOT NULL,
+  post_type_id INT NOT NULL,
   title VARCHAR(128) NOT NULL,
   text TEXT NULL DEFAULT NULL,
   quote VARCHAR(128) NULL DEFAULT '',
@@ -29,7 +29,7 @@ CREATE TABLE comments (
   id INT AUTO_INCREMENT PRIMARY KEY,
   creation_date DATETIME DEFAULT CURRENT_TIMESTAMP, 
   content TEXT NOT NULL,
-  author_id VARCHAR(128) NOT NULL,
+  author_id INT NOT NULL,
   post_id INT NOT NULL
 );
 
@@ -40,7 +40,7 @@ ALTER TABLE `comments` ADD FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`)
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 CREATE TABLE likes (
-  author_id VARCHAR(128) NOT NULL,
+  author_id INT NOT NULL,
   post_id INT NOT NULL
 );
 
@@ -51,8 +51,8 @@ ALTER TABLE `likes` ADD FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`)
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 CREATE TABLE subscriptions (
-  subscriber_id VARCHAR(128) NOT NULL,
-  author_id VARCHAR(128) NOT NULL
+  subscriber_id INT NOT NULL,
+  author_id INT NOT NULL
 );
 
 ALTER TABLE `subscriptions` ADD FOREIGN KEY (`subscriber_id`) REFERENCES `users`(`id`) 
@@ -65,8 +65,8 @@ CREATE TABLE messages (
   id INT AUTO_INCREMENT PRIMARY KEY,
   creation_date DATETIME DEFAULT CURRENT_TIMESTAMP,
   content TEXT NOT NULL,
-  sender_id VARCHAR(128) NOT NULL,
-  recipient_id VARCHAR(128) NOT NULL
+  sender_id INT NOT NULL,
+  recipient_id INT NOT NULL
 );
 
 ALTER TABLE `messages` ADD FOREIGN KEY (`sender_id`) REFERENCES `users`(`id`) 
