@@ -132,7 +132,6 @@
                 </div>
                     <?php endif; ?>
                 </div>
-
                 <?php
                  $datetime = $post['creation_date'];
                  $date_title = date('d.m.Y H:i' ,strtotime($datetime));
