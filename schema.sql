@@ -93,4 +93,3 @@ ALTER TABLE `posts` ADD FOREIGN KEY (`post_type_id`) REFERENCES `post_types`(`id
 ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 CREATE INDEX p_post_type_id ON posts(post_type_id);
-

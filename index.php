@@ -8,16 +8,23 @@ require('helpers.php');
 $con = mysqli_connect("971699-readme-12", "root", "", "readme_db");
 mysqli_set_charset($con, "utf8");
 
-$post_types_sql = "SELECT name FROM post_types";
+$post_types_sql = "SELECT name 
+FROM post_types";
+
 $result_post_types = mysqli_query($con, $post_types_sql);
 $post_types = mysqli_fetch_all($result_post_types, MYSQLI_ASSOC);
 
+$posts_sql = "SELECT p.id, p.creation_date, p.title, p.text, p.quote, p.photo, p.video, p.link, u.login AS login, u.avatar AS avatar, p_t.name AS post_type_name, p.count_views 
+FROM posts p 
+JOIN users u ON p.author_id = u.id 
+JOIN post_types p_t ON p.post_type_id = p_t.id 
+ORDER BY count_views DESC 
+LIMIT 6";
 
-$posts_sql = "SELECT p.id, p.creation_date, p.title, p.text, p.quote, p.photo, p.video, p.link, u.login AS login, u.avatar AS avatar, p_t.name AS post_type_name, p.count_views FROM posts p JOIN users u ON p.author_id = u.id JOIN post_types p_t ON p.post_type_id = p_t.id ORDER BY count_views DESC LIMIT 6";
 $result_posts = mysqli_query($con, $posts_sql);
 $posts = mysqli_fetch_all($result_posts, MYSQLI_ASSOC);
 
-$main = include_template('main.php', ['posts' => $posts]);
+$main = include_template('main.php', ['posts' => $posts, 'post_types' => $post_types]);
 $layout = include_template('layout.php', ['title' => $title, 'main' => $main]);
 
 print $layout;
