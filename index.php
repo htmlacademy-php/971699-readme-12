@@ -5,45 +5,26 @@ $is_auth = rand(0, 1);
 $user_name = 'Сергей'; // укажите здесь ваше имя
 require('helpers.php'); 
 
-$posts = [
-            [
-             'title'   => 'Цитата',
-             'type'    => 'post-quote',
-             'content' => 'Мы в жизни любим только раз, а после ищем лишь похожих',
-             'name'    => 'Лариса',
-             'ava'     => 'userpic-larisa-small.jpg'
-            ],
-             [
-             'title'  => 'Игра престолов',
-             'type'    => 'post-text',
-             'content' => 'Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!Не могу дождаться начала финального сезона своего любимого сериала!',
-             'name'    => 'Владик',
-             'ava'     => 'userpic.jpg'
-            ],
-             [
-             'title'  => 'Наконец, обработал фотки!',
-             'type'    => 'post-photo',
-             'content' => 'rock-medium.jpg',
-             'name'    => 'Виктор',
-             'ava'     => 'userpic-mark.jpg'
-            ],
-             [
-             'title'  => 'Моя мечта',
-             'type'    => 'post-photo',
-             'content' => 'coast-medium.jpg',
-             'name'    => 'Лариса',
-             'ava'     => 'userpic-larisa-small.jpg'
-            ],
-             ['title'  => 'Лучшие курсы',
-             'type'    => 'post-link',
-             'content' => 'www.htmlacademy.ru',
-             'name'    => 'Владик',
-             'ava'     => 'userpic.jpg'
-            ],
-            ];
+$con = mysqli_connect("971699-readme-12", "root", "", "readme_db");
+mysqli_set_charset($con, "utf8");
 
+$post_types_sql = "SELECT name 
+FROM post_types";
 
-$main = include_template('main.php', ['posts' => $posts]);
+$result_post_types = mysqli_query($con, $post_types_sql);
+$post_types = mysqli_fetch_all($result_post_types, MYSQLI_ASSOC);
+
+$posts_sql = "SELECT p.id, p.creation_date, p.title, p.text, p.quote, p.photo, p.video, p.link, u.login AS login, u.avatar AS avatar, p_t.name AS post_type_name, p.count_views 
+FROM posts p 
+JOIN users u ON p.author_id = u.id 
+JOIN post_types p_t ON p.post_type_id = p_t.id 
+ORDER BY count_views DESC 
+LIMIT 6";
+
+$result_posts = mysqli_query($con, $posts_sql);
+$posts = mysqli_fetch_all($result_posts, MYSQLI_ASSOC);
+
+$main = include_template('main.php', ['posts' => $posts, 'post_types' => $post_types]);
 $layout = include_template('layout.php', ['title' => $title, 'main' => $main]);
 
 print $layout;

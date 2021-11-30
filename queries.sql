@@ -25,7 +25,7 @@ SELECT  p.id, p.creation_date, p.title, u.login AS login, p_t.title AS post_type
 SELECT * FROM posts WHERE author_id = 3;
 
 --список комментариев для одного поста, вместе с логином пользователя
-SELECT c.content, u.login AS login FROM  comments c JOIN posts p ON c.post_id = p.id JOIN users u ON c.author_id = u.id WHERE p.id = 2;
+SELECT c.content, u.login AS login FROM comments c JOIN posts p ON c.post_id = p.id JOIN users u ON c.author_id = u.id WHERE p.id = 2;
 
 --добавляем лайк к посту
 INSERT INTO likes (author_id, post_id) VALUES (1, 2);
