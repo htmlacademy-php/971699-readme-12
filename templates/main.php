@@ -43,7 +43,7 @@
                     <?php foreach ($post_types as $key => $post_type): ?>
                     <li class="popular__filters-item filters__item">
                         <a class="filters__button filters__button--<?= $post_type['name']; ?> button" href="#">
-                            <span class="visually-hidden"><?=$post_type;?></span>
+                            <span class="visually-hidden"><?=$post_type['name'];?></span>
                             <svg class="filters__icon" width="22" height="18">
                                 <use xlink:href="#icon-filter-<?= $post_type['name']; ?>"></use>
                             </svg>
