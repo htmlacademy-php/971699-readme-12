@@ -36,13 +36,13 @@
                 <b class="popular__filters-caption filters__caption">Тип контента:</b>
                 <ul class="popular__filters-list filters__list">
                     <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                        <a class="filters__button filters__button--ellipse filters__button--all filters__button--active" href="#">
+                        <a class="filters__button filters__button--ellipse filters__button--all <? if ($type == '') {print('filters__button--active');}?>" href="index.php">
                             <span>Все</span>
                         </a>
                     </li>
                     <?php foreach ($post_types as $key => $post_type): ?>
                     <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--<?= $post_type['name']; ?> button" href="#">
+                        <a class="<? if ($type == $post_type['id']) {print('filters__button--active');}?> filters__button filters__button--<?= $post_type['name']; ?> button" href="index.php?type=<?= $post_type['id']; ?>">
                             <span class="visually-hidden"><?=$post_type['name'];?></span>
                             <svg class="filters__icon" width="22" height="18">
                                 <use xlink:href="#icon-filter-<?= $post_type['name']; ?>"></use>
@@ -57,7 +57,8 @@
             <?php foreach ($posts as $key => $post): ?>
             <article class="popular__post post post-<?=htmlspecialchars($post['post_type_name']);?>">
                 <header class="post__header">
-                    <h2><?=htmlspecialchars($post['title']);?></h2>
+                    <h2>
+                        <a href="post.php?p_id=<?= $post['id'];?>&name=<?= $post['post_type_name'];?> "><?=htmlspecialchars($post['title']);?></a></h2>
                 </header>
                 <div class="post__main">
                     <?php if ($post['post_type_name'] == 'quote'): ?>
