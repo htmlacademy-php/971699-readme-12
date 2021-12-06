@@ -16,6 +16,7 @@ $post_types = mysqli_fetch_all($result_post_types, MYSQLI_ASSOC);
 
 if (isset($_GET['type'])) 
      {
+     $type = null;
      $type = $_GET['type'];
      $where = "WHERE p.post_type_id = $type";
      }
