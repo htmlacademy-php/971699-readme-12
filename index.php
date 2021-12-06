@@ -20,7 +20,7 @@ if (isset($_GET['type']))
      $type = $_GET['type'];
      $where = "WHERE p.post_type_id = $type";
      }
-else { 
+else {
      $where = '';
      }
 

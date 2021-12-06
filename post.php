@@ -11,7 +11,7 @@ if (isset($_GET['p_id']))
        $query=mysqli_query($con, "SELECT id FROM posts WHERE id = $p_id");
        $isPostExists = !empty(mysqli_fetch_array($query));
 
-	if($isPostExists>0)
+	if($isPostExists)
 		{
      $where = "WHERE p.id = $p_id";
      $name = $_GET['name'];
